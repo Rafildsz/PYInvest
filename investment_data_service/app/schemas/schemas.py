@@ -8,9 +8,18 @@ class ClienteCreate(BaseModel):
     perfil_investidor: str
     patrimonio_total: float
 
+class ClienteUpdate(BaseModel):
+    nome: str
+    email: str 
+    perfil_investidor: str 
+    patrimonio_total: float 
+
 class ClienteResponse(ClienteCreate):
     id: str
     data_cadastro: datetime
+    
+    class Config:
+        orm_mode = True
 
 class InvestimentoCreate(BaseModel):
     cliente_id: str

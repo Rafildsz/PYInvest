@@ -1,7 +1,7 @@
 from fastapi import FastAPI, Depends
 from sqlalchemy.orm import Session
 from app.database.database import Base, engine, SessionLocal
-from app.schemas.schemas import ClienteCreate, InvestimentoCreate
+from app.schemas.schemas import ClienteCreate, ClienteUpdate ,InvestimentoCreate
 from app.crud.crud import *
 
 Base.metadata.create_all(bind=engine)
@@ -22,6 +22,22 @@ def criar(cliente: ClienteCreate, db: Session = Depends(get_db)):
 @app.get("/internal/clientes")
 def listar(db: Session = Depends(get_db)):
     return listar_clientes(db)
+
+@app.get("/internal/clientes/{cliente_id}")
+def buscar(cliente_id: str, db: Session = Depends(get_db)):
+    cliente = listar_cliente_por_id(db, cliente_id)
+    if not cliente:
+        return {"erro": "Cliente não encontrado"}
+    return cliente
+
+@app.put("/internal/clientes/{cliente_id}")
+def atualizar(cliente_id: str, cliente_update: ClienteUpdate, db: Session = Depends(get_db)):
+    cliente = atualizar_cliente(db, cliente_id, cliente_update.dict())
+    return cliente
+
+@app.delete("/internal/clientes/{cliente_id}")
+def deletar(cliente_id: str, db: Session = Depends(get_db)):
+    return deletar_cliente(db, cliente_id)
 
 @app.post("/internal/investimentos")
 def criar_inv(inv: InvestimentoCreate, db: Session = Depends(get_db)):
