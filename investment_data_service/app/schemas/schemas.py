@@ -27,3 +27,16 @@ class InvestimentoCreate(BaseModel):
     valor_investido: float
     rentabilidade: float
     ativo: bool
+
+class InvestimentoUpdate(BaseModel):
+    tipo_investimento: str
+    valor_investido: float
+    rentabilidade: float
+    ativo: bool 
+
+class InvestimentoResponse(InvestimentoCreate):
+    id: str
+    data_aplicacao: datetime
+    
+    class Config:
+        orm_mode = True
