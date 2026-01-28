@@ -1,8 +1,8 @@
-from pydantic import BaseModel
+'''from pydantic import BaseModel
 
 class Cliente(BaseModel):
     nome: str
     cpf: str
     email: str
     perfil_investidor: str
-    patrimonio_total: float
+    patrimonio_total: float'''
