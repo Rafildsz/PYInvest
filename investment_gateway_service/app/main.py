@@ -10,12 +10,11 @@ app = FastAPI(title="Investment Gateway Service")
 app.include_router(clients_router)
 app.include_router(investments_router)
 
+DATA_SERVICE_URL = "http://127.0.0.1:8001/internal/clientes"
 
 @app.get("/api/v1/calculos/projecao/{cliente_id}")
 def calcular_projecao(cliente_id: str):
-    clientes = requests.get(
-        "http://127.0.0.1:8001/internal/clientes"
-    ).json()
+    clientes = requests.get(DATA_SERVICE_URL).json()
 
     cliente = next((c for c in clientes if c["id"] == cliente_id), None)
 

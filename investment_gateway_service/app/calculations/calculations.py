@@ -5,5 +5,4 @@ def projecao(patrimonio: float, perfil: str):
         return patrimonio * 0.12
     if perfil == "ARROJADO":
         return patrimonio * 0.18
-    else:
-        return "Perfil de investidor inválido"
+    return 0.0

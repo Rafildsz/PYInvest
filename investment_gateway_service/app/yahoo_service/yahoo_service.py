@@ -15,9 +15,12 @@ def obter_preco(ticker: str):
             "ticker": ticker,
             "preco_atual": preco
         }
+    
 
     except Exception as e:
         return {
             "erro": "Falha ao consultar Yahoo Finance",
             "detalhe": str(e)
         }
+    
+

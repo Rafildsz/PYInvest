@@ -19,6 +19,12 @@ def criar_cliente(db: Session, cliente: ClienteCreate):
             status_code=status.HTTP_400_BAD_REQUEST,
             detail="O patrimônio total não pode ser negativo"
         )
+    
+    if cliente.perfil_investidor not in ["CONSERVADOR", "MODERADO", "ARROJADO"]:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Perfil de investidor inválido"
+        )
 
     try:
         db.add(cliente_db)
