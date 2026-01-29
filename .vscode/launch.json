@@ -1,0 +1,19 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Depurador do Python: FastAPI",
+            "type": "debugpy",
+            "request": "launch",
+            "module": "uvicorn",
+            "args": [
+                "investment_gateway_service.app.main:app",
+                "--reload"
+            ],
+            "jinja": true,
+            "env": {
+                "PYTHONPATH": "${workspaceFolder}/investment_gateway_service"
+            }
+        }
+    ]
+}
