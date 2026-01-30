@@ -1,30 +1,34 @@
 import yfinance as yf
-import pandas as pd
 
-def obter_preco(ticker: str):
-    try:
-        ativo = yf.Ticker(ticker)
-        hist = ativo.history(period="1d")
 
-        if hist is None or hist.empty or "Close" not in hist.columns:
-            return {
-                "erro": "Ticker inválido ou sem dados no momento"
-            }
+def obter_dados_mercado(ticker: str, periodo="1mo"):
+    ativo = yf.Ticker(ticker)
+    hist = ativo.history(period=periodo)
 
-        preco = float(hist["Close"].iloc[-1])
-        return {
-            "ticker": ticker,
-            "preco_atual": preco
-        }
+    if hist.empty:
+        raise ValueError("Sem dados")
 
-    except (yf.shared._exceptions.YFQueryError, pd.errors.EmptyDataError, ValueError) as e:
-        return {
-            "erro": "Erro ao consultar dados do Yahoo Finance",
-            "detalhe": str(e)
-        }
-    except Exception as e:
-        return {
-            "erro": "Falha inesperada ao consultar Yahoo Finance",
-            "detalhe": str(e)
-        }
-    
+    preco_atual = float(hist["Close"].iloc[-1])
+    preco_inicial = float(hist["Close"].iloc[0])
+
+    variacao_percentual = ((preco_atual - preco_inicial) / preco_inicial) * 100
+
+    return {
+        "ticker": ticker,
+        "preco_atual": preco_atual,
+        "variacao_percentual": round(variacao_percentual, 2),
+        "periodo": periodo
+    }
+
+
+def variacao_percentual(ticker: str, periodo="1y") -> float:
+    ativo = yf.Ticker(ticker)
+    hist = ativo.history(period=periodo)
+
+    if hist.empty:
+        return 0.0
+
+    preco_inicial = hist["Close"].iloc[0]
+    preco_final = hist["Close"].iloc[-1]
+
+    return round(((preco_final - preco_inicial) / preco_inicial) * 100, 2)

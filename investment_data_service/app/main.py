@@ -58,6 +58,18 @@ def buscar_inv(investimento_id: str, db: Session = Depends(get_db)):
         return {"erro": "Investimento não encontrado"}
     return investimento
 
+@app.get("/internal/investimentos/cliente/{cliente_id}")
+def listar_investimentos_por_cliente(cliente_id: str, db: Session = Depends(get_db)):
+    investimentos = db.query(Investimento)\
+        .filter(Investimento.cliente_id == cliente_id)\
+        .all()
+
+    if not investimentos:
+        raise HTTPException(status_code=404, detail="Nenhum investimento encontrado")
+
+    return investimentos
+
+
 @app.put("/internal/investimentos/{investimento_id}")
 def atualizar_inv(investimento_id: str, inv_update: InvestimentoUpdate, db: Session = Depends(get_db)):
     investimento = atualizar_investimento(db, investimento_id, inv_update.dict())

@@ -110,6 +110,12 @@ def criar_investimento(db: Session, investimento: InvestimentoCreate):
             status_code=status.HTTP_400_BAD_REQUEST,
             detail="O valor investido não pode ser negativo ou zero"
         )
+    
+    if investimento.tipo_investimento not in ["AÇÕES", "FUNDOS", "RENDA_FIXA", "CRYPTO"]:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Tipo de investimento inválido"
+        ) 
 
     
     db.add(investimento_db)
