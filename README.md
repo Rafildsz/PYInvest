@@ -37,24 +37,35 @@ Ele não persiste dados, sendo responsável por orquestrar chamadas, realizar c�
 ---
 
 GET    /api/v1/clientes
+
 GET    /api/v1/clientes/{id}
+
 POST   /api/v1/clientes
+
 PUT    /api/v1/clientes/{id}
+
 DELETE /api/v1/clientes/{id}
 
 ---
 
 GET    /api/v1/investimentos
+
 GET    /api/v1/investimentos/cliente/{cliente_id}
+
 POST   /api/v1/investimentos
+
 PUT    /api/v1/investimentos/{id}
+
 DELETE /api/v1/investimentos/{id}
 
 ---
 
 GET /api/v1/calculos/projecao/{cliente_id}
+
 GET /api/v1/calculos/patrimonio/{cliente_id}
+
 GET /api/v1/analises/carteira/{cliente_id}
+
 GET /api/v1/analises/mercado/{ticker}
 
 ---
